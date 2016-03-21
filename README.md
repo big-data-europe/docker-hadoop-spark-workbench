@@ -10,5 +10,5 @@ To scale up spark-workers:
     docker-compose scale spark-worker=3
 ```
 
-## Acknowledgements
-This repository was forked from https://bitbucket.org/uhopper/hadoop-docker
+## Notes
+Hadoop/Spark dockerfiles were forked from https://bitbucket.org/uhopper/hadoop-docker
