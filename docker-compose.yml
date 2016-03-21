@@ -79,3 +79,12 @@ spark-notebook:
     - ./hadoop.env    
   ports:
     - "9000:9000"
+
+hue:
+  image: aksw/hue
+  hostname: hue
+  container_name: hue
+  domainname: hue
+  net: hadoop
+  ports:
+    - "8088:8088"
