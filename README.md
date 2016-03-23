@@ -12,7 +12,7 @@ To scale up spark-workers:
 ```
 
 ## Docs
-* [Motivation behind the repo and an example usage](https://medium.com/@ivanermilov/scalable-spark-hdfs-setup-using-docker-2fd0ffa1d6bf)
+* [Motivation behind the repo and an example usage @BDE2020 Blog](http://www.big-data-europe.eu/scalable-sparkhdfs-workbench-using-docker/)
 
 ## Notes
 Hadoop/Spark dockerfiles were forked from https://bitbucket.org/uhopper/hadoop-docker
