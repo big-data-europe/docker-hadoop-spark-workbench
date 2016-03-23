@@ -5,6 +5,7 @@ RUN mkdir -p /opt/hue
 WORKDIR /opt/hue
 
 RUN git clone https://github.com/cloudera/hue.git ./
+RUN git checkout branch-3.9
 RUN make apps
 
 ADD entrypoint.sh /entrypoint.sh
