@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t aksw/huebuildenv .
+docker build -t bde2020/huebuildenv .

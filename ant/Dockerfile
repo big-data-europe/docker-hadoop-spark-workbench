@@ -1,5 +1,7 @@
 FROM java:8
 
+MAINTAINER Ivan Ermilov <ivan.s.ermilov@gmail.com>
+
 ENV ANT_VERSION 1.9.6
 RUN cd && \
     wget -q http://www.us.apache.org/dist//ant/binaries/apache-ant-${ANT_VERSION}-bin.tar.gz && \

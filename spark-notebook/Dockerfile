@@ -1,4 +1,5 @@
-FROM aksw/hadoop
+FROM bde2020/hadoop
+MAINTAINER Ivan Ermilov <ivan.s.ermilov@gmail.com>
 
 ENV APACHE_SPARK_VERSION 1.6.1
 ENV APACHE_HADOOP_VERSION 2.7.1

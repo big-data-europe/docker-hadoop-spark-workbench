@@ -1,4 +1,5 @@
-FROM aksw/hadoop
+FROM bde2020/hadoop
+MAINTAINER Ivan Ermilov <ivan.s.ermilov@gmail.com>
 
 ENV YARN_CONF_yarn_timeline___service_leveldb___timeline___store_path=/hadoop/yarn/timeline
 RUN mkdir -p /hadoop/yarn/timeline

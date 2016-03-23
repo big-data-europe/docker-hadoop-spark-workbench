@@ -1,3 +1,3 @@
 #!/bin/sh
 
-docker build -t aksw/hadoop-resourcemanager .
+docker build -t bde2020/hadoop-resourcemanager .

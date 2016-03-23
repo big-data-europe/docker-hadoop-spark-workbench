@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t aksw/hue .
+docker build -t bde2020/hue .

@@ -1,4 +1,5 @@
-FROM aksw/ant
+FROM bde2020/ant
+MAINTAINER Ivan Ermilov <ivan.s.ermilov@gmail.com>
 
 RUN apt-get update
 RUN apt-get install -y gcc
