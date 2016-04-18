@@ -2,7 +2,7 @@
 
 HUE_HOME="/opt/hue/"
 HUE_CONFIG_FILE="$HUE_HOME/desktop/conf/pseudo-distributed.ini"
-APP_BLACKLIST="search,security,oozie,jobbrowser,pig,beeswax,search,zookeeper,impala,rdbms,spark,metastore,hbase,sqoop,jobsub"
+APP_BLACKLIST="search,security,oozie,jobbrowser,pig,beeswax,search,zookeeper,impala,rdbms,spark,metastore,hbase,sqoop,jobsub,about"
 NAMENODE_HOST="namenode"
 
 sed -i "s#.*blacklist.*#  app_blacklist=$APP_BLACKLIST#g" $HUE_CONFIG_FILE
