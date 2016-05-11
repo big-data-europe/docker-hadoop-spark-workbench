@@ -74,9 +74,9 @@ spark-notebook:
   domainname: hadoop
   net: hadoop
   environment:
-    - SPARK_NOTEBOOK_MASTER=yarn-client  
+    - SPARK_NOTEBOOK_MASTER=yarn-client
   env_file:
-    - ./hadoop.env    
+    - ./hadoop.env
   ports:
     - "9000:9000"
 
@@ -86,5 +86,7 @@ hue:
   container_name: hue
   domainname: hue
   net: hadoop
+  environment:
+    - NAMENODE_HOST=namenode
   ports:
     - "8088:8088"
