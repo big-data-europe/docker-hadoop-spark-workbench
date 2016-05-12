@@ -1,5 +1,5 @@
 namenode:
-  image: bde2020/hadoop-namenode
+  image: bde2020/hadoop-namenode:1.0.0
   hostname: namenode
   container_name: namenode
   domainname: hadoop
@@ -14,7 +14,7 @@ namenode:
     - "50070:50070"
 
 datanode1:
-  image: bde2020/hadoop-datanode
+  image: bde2020/hadoop-datanode:1.0.0
   hostname: datanode1
   container_name: datanode1
   domainname: hadoop
@@ -25,7 +25,7 @@ datanode1:
     - ./hadoop.env
 
 datanode2:
-  image: bde2020/hadoop-datanode
+  image: bde2020/hadoop-datanode:1.0.0
   hostname: datanode2
   container_name: datanode2
   domainname: hadoop
@@ -36,7 +36,7 @@ datanode2:
     - ./hadoop.env
 
 spark-master:
-  image: bde2020/hadoop-spark-master
+  image: earthquakesan/hadoop-spark-master:1.0.0
   hostname: spark-master
   container_name: spark-master
   domainname: hadoop
@@ -53,7 +53,7 @@ spark-master:
       - "8080:8080"
 
 spark-worker:
-  image: bde2020/hadoop-spark-worker
+  image: earthquakesan/hadoop-spark-worker:1.0.0
   hostname: spark-worker
   domainname: hadoop
   net: hadoop
@@ -68,7 +68,7 @@ spark-worker:
     - ./hadoop.env
 
 spark-notebook:
-  image: bde2020/hadoop-spark-notebook
+  image: earthquakesan/hadoop-spark-notebook:1.0.0
   hostname: sparknotebook
   container_name: sparknotebook
   domainname: hadoop
@@ -81,10 +81,10 @@ spark-notebook:
     - "9000:9000"
 
 hue:
-  image: bde2020/hue
-  hostname: hue
-  container_name: hue
-  domainname: hue
+  image: bde2020/hdfs-filebrowser:1.0.0
+  hostname: hdfsfb
+  container_name: hdfsfb
+  domainname: hadoop
   net: hadoop
   environment:
     - NAMENODE_HOST=namenode
