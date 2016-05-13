@@ -81,7 +81,7 @@ spark-notebook:
     - "9000:9000"
 
 hue:
-  image: bde2020/hdfs-filebrowser:1.0.0
+  image: bde2020/hdfs-filebrowser:3.9
   hostname: hdfsfb
   container_name: hdfsfb
   domainname: hadoop
