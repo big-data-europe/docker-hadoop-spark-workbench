@@ -1,8 +1,8 @@
-# How to use docker-compose
+# How to use HDFS/Spark Workbench
 
-To start a cluster:
+To start an HDFS/Spark Workbench:
 ```
-    ./buildall.sh
+    network create hadoop
     docker-compose up -d
 ```
 
@@ -13,6 +13,3 @@ To scale up spark-workers:
 
 ## Docs
 * [Motivation behind the repo and an example usage @BDE2020 Blog](http://www.big-data-europe.eu/scalable-sparkhdfs-workbench-using-docker/)
-
-## Notes
-Hadoop/Spark dockerfiles were forked from https://bitbucket.org/uhopper/hadoop-docker
