@@ -12,6 +12,7 @@ namenode:
     - ./hadoop.env
   ports:
     - "50070:50070"
+    - "8020:8020"
 
 datanode1:
   image: bde2020/hadoop-datanode:1.0.0
