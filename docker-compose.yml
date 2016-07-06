@@ -52,6 +52,7 @@ spark-master:
     - ./hadoop.env
   ports:
       - "8080:8080"
+      - "7077:7077"
 
 spark-worker:
   image: earthquakesan/hadoop-spark-worker:1.0.0
