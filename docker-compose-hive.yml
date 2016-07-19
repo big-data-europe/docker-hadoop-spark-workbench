@@ -1,105 +1,120 @@
-namenode:
-  image: bde2020/hadoop-namenode:1.0.0
-  hostname: namenode
-  container_name: namenode
-  domainname: hadoop
-  net: hadoop
-  volumes:
-    - ./data/namenode:/hadoop/dfs/name
-  environment:
-    - CLUSTER_NAME=test
-  env_file:
-    - ./hadoop.env
-  ports:
-    - "50070:50070"
-    - "8020:8020"
+version: '2' 
+services:
+    namenode:
+      image: bde2020/hadoop-namenode:1.0.0
+      hostname: namenode
+      container_name: namenode
+      domainname: hadoop
+      networks:
+        - hadoop
+      volumes:
+        - ./data/namenode:/hadoop/dfs/name
+      environment:
+        - CLUSTER_NAME=test
+      env_file:
+        - ./hadoop.env
+      ports:
+        - "50070:50070"
+        - "8020:8020"
 
-datanode1:
-  image: bde2020/hadoop-datanode:1.0.0
-  hostname: datanode1
-  container_name: datanode1
-  domainname: hadoop
-  net: hadoop
-  volumes:
-    - ./data/datanode1:/hadoop/dfs/data
-  env_file:
-    - ./hadoop.env
+    datanode1:
+      image: bde2020/hadoop-datanode:1.0.0
+      hostname: datanode1
+      container_name: datanode1
+      domainname: hadoop
+      networks:
+        - hadoop
+      volumes:
+        - ./data/datanode1:/hadoop/dfs/data
+      env_file:
+        - ./hadoop.env
 
-datanode2:
-  image: bde2020/hadoop-datanode:1.0.0
-  hostname: datanode2
-  container_name: datanode2
-  domainname: hadoop
-  net: hadoop
-  volumes:
-    - ./data/datanode2:/hadoop/dfs/data
-  env_file:
-    - ./hadoop.env
+    datanode2:
+      image: bde2020/hadoop-datanode:1.0.0
+      hostname: datanode2
+      container_name: datanode2
+      domainname: hadoop
+      networks: 
+        - hadoop
+      volumes:
+        - ./data/datanode2:/hadoop/dfs/data
+      env_file:
+        - ./hadoop.env
 
-spark-master:
-  image: earthquakesan/hadoop-spark-master:1.6.2-hadoop2.6-hive
-  hostname: spark-master
-  container_name: spark-master
-  domainname: hadoop
-  net: hadoop
-  environment:
-    - CORE_CONF_fs_defaultFS=hdfs://namenode:8020
-    - YARN_CONF_yarn_resourcemanager_hostname=resourcemanager
-    - SPARK_CONF_spark_eventLog_enabled=true
-    - SPARK_CONF_spark_eventLog_dir=hdfs://namenode:8020/spark-logs
-    - SPARK_CONF_spark_history_fs_logDirectory=hdfs://namenode:8020/spark-logs
-  env_file:
-    - ./hadoop.env
-  ports:
-      - "8080:8080"
+    spark-master:
+      image: earthquakesan/hadoop-spark-master:1.0.0
+      hostname: spark-master
+      container_name: spark-master
+      domainname: hadoop
+      networks:
+        - hadoop
+      environment:
+        - CORE_CONF_fs_defaultFS=hdfs://namenode:8020
+        - YARN_CONF_yarn_resourcemanager_hostname=resourcemanager
+        - SPARK_CONF_spark_eventLog_enabled=true
+        - SPARK_CONF_spark_eventLog_dir=hdfs://namenode:8020/spark-logs
+        - SPARK_CONF_spark_history_fs_logDirectory=hdfs://namenode:8020/spark-logs
+      env_file:
+        - ./hadoop.env
+      ports:
+          - "8080:8080"
 
-spark-worker:
-  image: earthquakesan/hadoop-spark-worker:1.6.2-hadoop2.6-hive
-  hostname: spark-worker
-  domainname: hadoop
-  net: hadoop
-  environment:
-    - CORE_CONF_fs_defaultFS=hdfs://namenode:8020
-    - YARN_CONF_yarn_resourcemanager_hostname=resourcemanager
-    - SPARK_CONF_spark_eventLog_enabled=true
-    - SPARK_CONF_spark_eventLog_dir=hdfs://namenode:8020/spark-logs
-    - SPARK_CONF_spark_history_fs_logDirectory=hdfs://namenode:8020/spark-logs
-    - SPARK_MASTER_URL=spark://spark-master:7077
-  env_file:
-    - ./hadoop.env
+    spark-worker:
+      image: earthquakesan/hadoop-spark-worker:1.0.0
+      hostname: spark-worker
+      domainname: hadoop
+      networks: 
+        - hadoop
+      environment:
+        - CORE_CONF_fs_defaultFS=hdfs://namenode:8020
+        - YARN_CONF_yarn_resourcemanager_hostname=resourcemanager
+        - SPARK_CONF_spark_eventLog_enabled=true
+        - SPARK_CONF_spark_eventLog_dir=hdfs://namenode:8020/spark-logs
+        - SPARK_CONF_spark_history_fs_logDirectory=hdfs://namenode:8020/spark-logs
+        - SPARK_MASTER_URL=spark://spark-master:7077
+      env_file:
+        - ./hadoop.env
 
-spark-notebook:
-  image: earthquakesan/hadoop-spark-notebook:1.0.0
-  hostname: sparknotebook
-  container_name: sparknotebook
-  domainname: hadoop
-  net: hadoop
-  environment:
-    - SPARK_NOTEBOOK_MASTER=yarn-client
-  env_file:
-    - ./hadoop.env
-  ports:
-    - "9000:9000"
+    spark-notebook:
+      image: earthquakesan/hadoop-spark-notebook:1.0.0
+      hostname: sparknotebook
+      container_name: sparknotebook
+      domainname: hadoop
+      networks:
+        - hadoop
+      environment:
+        - SPARK_NOTEBOOK_MASTER=yarn-client
+      env_file:
+        - ./hadoop.env
+      ports:
+        - "9000:9000"
 
-hue:
-  image: bde2020/hdfs-filebrowser:3.9
-  hostname: hdfsfb
-  container_name: hdfsfb
-  domainname: hadoop
-  net: hadoop
-  environment:
-    - NAMENODE_HOST=namenode
-  ports:
-    - "8088:8088"
+    hue:
+      image: bde2020/hdfs-filebrowser:3.9
+      hostname: hdfsfb
+      container_name: hdfsfb
+      domainname: hadoop
+      networks:
+        - hadoop
+      environment:
+        - NAMENODE_HOST=namenode
+      ports:
+        - "8088:8088"
 
-hive:
-  image: bde2020/hive
-  container_name: hive
-  net: hadoop
-  env_file:
-    - ./hadoop.env
-  volumes:
-    - ./data/hive-metastore:/hive-metastore
-  ports:
-    - "10000:10000"
-    - "10002:10002"
+    hive:
+      image: bde2020/hive
+      container_name: hive
+      networks: 
+        - hadoop
+      env_file:
+        - ./hadoop.env
+      volumes:
+        - ./data/hive-metastore:/hive-metastore
+      ports:
+        - "10000:10000"
+        - "10002:10002"
+
+networks:
+    hadoop:
+
+
