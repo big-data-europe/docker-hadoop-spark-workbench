@@ -2,7 +2,7 @@
 
 To start an HDFS/Spark Workbench:
 ```
-    network create hadoop
+    docker network create hadoop
     docker-compose up -d
 ```
 
