@@ -35,5 +35,5 @@ When opening Hue, you might encounter ```NoReverseMatch: u'about' is not a regis
 ## Docs
 * [Motivation behind the repo and an example usage @BDE2020 Blog](http://www.big-data-europe.eu/scalable-sparkhdfs-workbench-using-docker/)
 
-## Contributors
+## Maintainer
 * Ivan Ermilov @earthquakesan
