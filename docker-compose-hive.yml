@@ -60,7 +60,7 @@ services:
     image: bde2020/spark-notebook:2.1.0-hadoop2.8-hive
     container_name: spark-notebook
     env_file:
-      - ./hadoop.env
+      - ./hadoop-hive.env
     ports:
       - 9001:9001
   hue:
