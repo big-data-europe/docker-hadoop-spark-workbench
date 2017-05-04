@@ -14,17 +14,17 @@ To scale up spark-workers:
 
 Before starting the next command, check that the previous service is running correctly (with docker logs servicename).
 ```
-docker-compose up -f docker-compose-hive.yml -d namenode hive-metastore-postgresql
-docker-compose up -f docker-compose-hive.yml -d datanode hive-metastore
-docker-compose up -f docker-compose-hive.yml -d hive-server
-docker-compose up -f docker-compose-hive.yml -d spark-master spark-worker spark-notebook hue
+docker-compose -f docker-compose-hive.yml up -d namenode hive-metastore-postgresql
+docker-compose -f docker-compose-hive.yml up -d datanode hive-metastore
+docker-compose -f docker-compose-hive.yml up -d hive-server
+docker-compose -f docker-compose-hive.yml up -d spark-master spark-worker spark-notebook hue
 ```
 
 ## Interfaces
 
-* Namenode: http://locahost:50070
-* Datanode: http://locahost:50075
-* Spark-master: http://locahost:8080
+* Namenode: http://localhost:50070
+* Datanode: http://localhost:50075
+* Spark-master: http://localhost:8080
 * Spark-notebook: http://localhost:9001
 * Hue (HDFS Filebrowser): http://localhost:8088
 
