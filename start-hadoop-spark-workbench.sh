@@ -1,10 +1,11 @@
-#!/bin/bash -x
+#!/bin/bash
 
 docker-compose up -d
 
-echo "Namenode: http://locahost:50070"
-echo "Datanode: http://locahost:50075"
-echo "Spark-master: http://locahost:8080"
-echo "Spark-notebook: http://localhost:9001"
-echo "Hue (HDFS Filebrowser): http://localhost:8088"
+my_ip=`ip route get 1|awk '{print $NF;exit}'`
+echo "Namenode: http://${my_ip}:50070"
+echo "Datanode: http://${my_ip}:50075"
+echo "Spark-master: http://${my_ip}:8080"
+echo "Spark-notebook: http://${my_ip}:9001"
+echo "Hue (HDFS Filebrowser): http://${my_ip}:8088/home"
 

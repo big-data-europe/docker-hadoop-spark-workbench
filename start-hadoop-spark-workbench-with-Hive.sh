@@ -1,13 +1,14 @@
-#!/bin/bash -x
+#!/bin/bash
 
-docker-compose up -f docker-compose-hive.yml -d namenode hive-metastore-postgresql
-docker-compose up -f docker-compose-hive.yml -d datanode hive-metastore
-docker-compose up -f docker-compose-hive.yml -d hive-server
-docker-compose up -f docker-compose-hive.yml -d spark-master spark-worker spark-notebook hue
+docker-compose -f docker-compose-hive.yml up -d namenode hive-metastore-postgresql
+docker-compose -f docker-compose-hive.yml up -d datanode hive-metastore
+docker-compose -f docker-compose-hive.yml up -d hive-server
+docker-compose -f docker-compose-hive.yml up -d spark-master spark-worker spark-notebook hue
 
-echo "Namenode: http://locahost:50070"
-echo "Datanode: http://locahost:50075"
-echo "Spark-master: http://locahost:8080"
-echo "Spark-notebook: http://localhost:9001"
-echo "Hue (HDFS Filebrowser): http://localhost:8088"
+my_ip=`ip route get 1|awk '{print $NF;exit}'`
+echo "Namenode: http://${my_ip}:50070"
+echo "Datanode: http://${my_ip}:50075"
+echo "Spark-master: http://${my_ip}:8080"
+echo "Spark-notebook: http://${my_ip}:9001"
+echo "Hue (HDFS Filebrowser): http://${my_ip}:8088/home"
 
