@@ -1,1 +1,6 @@
 data/
+
+# Intellij IDEA specific
+.idea
+.idea/*
+*.sc

@@ -1,4 +1,4 @@
-version: '2' 
+version: '2'
 services:
   namenode:
     image: bde2020/hadoop-namenode:1.1.0-hadoop2.8-java8
@@ -56,6 +56,8 @@ services:
       - "8081:8081"
     env_file:
       - ./hadoop-hive.env
+    volumes:
+      - ./conf/spark/master.conf:/spark/conf/spark-defaults.conf
   spark-notebook:
     image: bde2020/spark-notebook:2.1.0-hadoop2.8-hive
     container_name: spark-notebook
@@ -64,8 +66,11 @@ services:
     ports:
       - 9001:9001
   hue:
-    image: bde2020/hdfs-filebrowser:3.11
+    image: gethue/hue:latest
+    depends_on:
+      - namenode
+      - datanode
     ports:
-      - 8088:8088
-    environment:
-      - NAMENODE_HOST=namenode
+      - 8888:8888
+    volumes:
+      - ./conf/hue/hue.ini:/hue/desktop/conf/pseudo-distributed.ini
