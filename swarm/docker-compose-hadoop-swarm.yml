@@ -1,0 +1,54 @@
+version: '3' 
+services:
+  namenode:
+    image: bde2020/hadoop-namenode:1.1.0-hadoop2.8-java8
+    networks:
+      - core
+    volumes:
+      - namenode:/hadoop/dfs/name
+    environment:
+      - CLUSTER_NAME=test
+    env_file:
+      - ./hadoop-swarm.env
+    deploy:
+      replicas: 1
+      mode: replicated
+      restart_policy:
+        condition: on-failure
+    ports:
+      - 50070:50070
+  datanode-1:
+    image: bde2020/hadoop-datanode:1.1.0-hadoop2.8-java8
+    networks:
+      - core
+    volumes:
+      - datanode-1:/hadoop/dfs/data
+    env_file:
+      - ./hadoop-swarm.env
+    deploy:
+      replicas: 1
+      mode: replicated
+      restart_policy:
+        condition: on-failure
+  datanode-2:
+    image: bde2020/hadoop-datanode:1.1.0-hadoop2.8-java8
+    networks:
+      - core
+    volumes:
+      - datanode-2:/hadoop/dfs/data
+    env_file:
+      - ./hadoop-swarm.env
+    deploy:
+      replicas: 1
+      mode: replicated
+      restart_policy:
+        condition: on-failure
+
+volumes:
+  datanode-1:
+  datanode-2:
+  namenode:
+
+networks:
+  core:
+    external: true
