@@ -1,0 +1,32 @@
+version: '3' 
+services:
+  spark-master:
+    image: bde2020/spark-master:2.1.0-hadoop2.8-hive-java8
+    networks:
+      - core
+    deploy:
+      replicas: 1
+      mode: replicated
+      restart_policy:
+        condition: on-failure
+    ports:
+      - 8080:8080
+      - 7077:7077
+    env_file:
+      - ./hadoop-swarm.env
+  spark-worker:
+    image: bde2020/spark-worker:2.1.0-hadoop2.8-hive-java8
+    networks:
+      - core
+    environment:
+      - SPARK_MASTER=spark://spark-master:7077
+    deploy:
+      mode: global
+      restart_policy:
+        condition: on-failure
+    env_file:
+      - ./hadoop-swarm.env
+
+networks:
+  core:
+    external: true
