@@ -1,4 +1,4 @@
-version: '2' 
+version: '2'
 services:
   namenode:
     image: bde2020/hadoop-namenode:1.1.0-hadoop2.8-java8
@@ -13,7 +13,7 @@ services:
       - 50070:50070
   datanode:
     image: bde2020/hadoop-datanode:1.1.0-hadoop2.8-java8
-    depends_on: 
+    depends_on:
       - namenode
     volumes:
       - ./data/datanode:/hadoop/dfs/data
@@ -52,8 +52,6 @@ services:
       - spark-master
     environment:
       - SPARK_MASTER=spark://spark-master:7077
-    ports:
-      - "8081:8081"
     env_file:
       - ./hadoop-hive.env
   spark-notebook:
@@ -69,3 +67,13 @@ services:
       - 8088:8088
     environment:
       - NAMENODE_HOST=namenode
+  lb:
+    image: dockercloud/haproxy
+    hostname: load-balancer
+    container_name: load-balancer
+    links:
+      - spark-worker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 8081:8081
