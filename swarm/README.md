@@ -26,3 +26,8 @@ To deploy spark run:
 ```
 docker stack deploy -c docker-compose-spark.yml spark
 ```
+
+
+# Examples
+
+The hdfs_examples service container integrates third party examples available on GitHub for Python and Java.
