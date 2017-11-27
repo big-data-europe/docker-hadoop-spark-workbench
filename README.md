@@ -35,5 +35,16 @@ When opening Hue, you might encounter ```NoReverseMatch: u'about' is not a regis
 ## Docs
 * [Motivation behind the repo and an example usage @BDE2020 Blog](http://www.big-data-europe.eu/scalable-sparkhdfs-workbench-using-docker/)
 
+## Count Example for Spark Notebooks
+```
+val spark = SparkSession
+  .builder()
+  .appName("Simple Count Example")
+  .getOrCreate()
+
+val tf = spark.read.textFile("/data.csv")
+tf.count()
+```
+
 ## Maintainer
 * Ivan Ermilov @earthquakesan
