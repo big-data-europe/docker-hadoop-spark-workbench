@@ -26,7 +26,7 @@ docker-compose -f docker-compose-hive.yml up -d spark-master spark-worker spark-
 * Datanode: http://localhost:50075
 * Spark-master: http://localhost:8080
 * Spark-notebook: http://localhost:9001
-* Hue (HDFS Filebrowser): http://localhost:8088
+* Hue (HDFS Filebrowser): http://localhost:8088/home
 
 ## Important
 
