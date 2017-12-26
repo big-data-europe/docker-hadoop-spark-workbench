@@ -1,28 +1,80 @@
 # Running Hadoop and Spark in Swarm cluster
 
+## Setup dnsmasq for local deployment
+
+dnsmasq in required for local traefik setup. When deploying on real swarm cluster, this step is unnecessary, simply modify traefik setup to use your registered domain name.
+
+Install dnsmasq:
+
+```
+sudo apt-get install dnsmasq
+```
+
+Inject local.host domain into dnsmasq and restart the service:
+
+```
+echo "address=/local.host/127.0.0.1" | sudo tee /etc/dnsmasq.d/workbench.conf
+sudo systemctl restart dnsmasq
+```
+
+Check that it worked (both pings should work, resolves to 127.0.0.1):
+```
+ping local.host
+ping namenode.local.host
+```
+
+## Initial setup
+
 Create an overlay network:
 ```
-docker network create -d overlay --attachable core
+make network
 ```
 
-To deploy hadoop run:
+Deploy traefik:
 ```
-docker stack deploy -c docker-compose-hadoop-swarm.yml hadoop
-```
-
-When datanodes are deployed before namenode, they can not reach namenode over the network. In case this happened, restart the datanode service:
-```
-# First check the logs
-docker logs -f hadoop_datanode.mdpzql2nkqyabgikmy2ks9vgg.sl8hoqhrwd10kgrvagm2aopoe
-# if there is a line 
-# 17/09/25 08:06:19 WARN datanode.DataNode: Problem connecting to server: namenode:8020
-# Check the service name
-docker service ls
-# And restart the datanode service
-docker service update --force hadoop_datanode
+make traefik
 ```
 
-To deploy spark run:
+Now navigate to localhost:8080 (or yourserver:8080) and check that traefik is running.
+
+## Deploying HDFS (without YARN)
+
+There is no need to explicitly pull the images, however doing it this way you can see the download progress.
+In case of multiple server deployment, if you pull only on your swarm manager, the images still need to be pulled on other nodes.
+Pull the images:
 ```
-docker stack deploy -c docker-compose-spark.yml spark
+docker-compose -f docker-compose-hadoop.yml pull
 ```
+
+To deploy HDFS run:
+```
+make hadoop
+```
+
+Go to traefik again and check if hadoop is running, copy/paste generated domain name into browser and check if namenode/datanode is working as well.
+
+## Deploying Spark
+
+Pull the images:
+```
+docker-compose -f docker-compose-spark.yml pull
+```
+
+Deploy Spark:
+```
+make spark
+```
+
+## Deploying Spark Notebook and HDFS Filebrowser
+
+Pull the images:
+```
+docker-compose -f docker-compose-services.yml pull
+```
+
+Deploy the services:
+```
+make services
+```
+
+Navigate to traefik and go to HDFS Filebrowser/Apache Zeppelin from there.

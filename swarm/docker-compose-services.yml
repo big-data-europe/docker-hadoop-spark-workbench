@@ -1,0 +1,45 @@
+version: '3'
+services:
+  zeppelin:
+    image: bde2020/zeppelin:0.0.1-zeppelin-0.7.3-hadoop-2.8.0-spark-2.2.0
+    volumes:
+      - zeppelinnotebooks:/opt/zeppelin/notebook
+    environment:
+      CORE_CONF_fs_defaultFS: "hdfs://namenode:8020"
+      SPARK_MASTER: "spark://spark-master:7077"
+      MASTER: "spark://spark-master:7077"
+      SPARK_SUBMIT_OPTIONS: ""
+    env_file:
+      - ./hadoop.env
+    deploy:
+      replicas: 1
+      mode: replicated
+      restart_policy:
+        condition: on-failure
+      labels:
+        traefik.docker.network: workbench
+        traefik.port: 8080
+    networks:
+      - workbench
+
+  hue:
+    image: bde2020/hdfs-filebrowser:3.11
+    deploy:
+      replicas: 1
+      mode: replicated
+      restart_policy:
+        condition: on-failure
+      labels:
+        traefik.docker.network: workbench
+        traefik.port: 8088
+    environment:
+      - NAMENODE_HOST=namenode
+    networks:
+      - workbench
+
+volumes:
+  zeppelinnotebooks:
+
+networks:
+  workbench:
+    external: true

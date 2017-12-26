@@ -1,32 +1,36 @@
-version: '3' 
+version: '3'
 services:
   spark-master:
-    image: bde2020/spark-master:2.1.0-hadoop2.8-hive-java8
+    image: bde2020/spark-master:2.2.0-hadoop2.8-hive-java8
     networks:
-      - core
+      - workbench
     deploy:
       replicas: 1
       mode: replicated
       restart_policy:
         condition: on-failure
-    ports:
-      - 8080:8080
-      - 7077:7077
+      labels:
+        traefik.docker.network: workbench
+        traefik.port: 8080
     env_file:
-      - ./hadoop-swarm.env
+      - ./hadoop.env
+
   spark-worker:
-    image: bde2020/spark-worker:2.1.0-hadoop2.8-hive-java8
+    image: bde2020/spark-worker:2.2.0-hadoop2.8-hive-java8
     networks:
-      - core
+      - workbench
     environment:
       - SPARK_MASTER=spark://spark-master:7077
     deploy:
       mode: global
       restart_policy:
         condition: on-failure
+      labels:
+        traefik.docker.network: workbench
+        traefik.port: 8081
     env_file:
-      - ./hadoop-swarm.env
+      - ./hadoop.env
 
 networks:
-  core:
+  workbench:
     external: true

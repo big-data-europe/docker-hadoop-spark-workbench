@@ -1,0 +1,51 @@
+version: '3'
+services:
+  namenode:
+    image: bde2020/hadoop-namenode:2.0.0-hadoop2.7.4-java8
+    networks:
+      - workbench
+    volumes:
+      - namenode:/hadoop/dfs/name
+    environment:
+      - CLUSTER_NAME=test
+    env_file:
+      - ./hadoop.env
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      # add placement constraint to allocate namenode on particular server
+      #placement:
+      #  constraints:
+      #    - node.hostname == master.node.com
+      labels:
+        traefik.docker.network: workbench
+        traefik.port: 50070
+
+  datanode:
+    image: bde2020/hadoop-datanode:2.0.0-hadoop2.7.4-java8
+    networks:
+      - workbench
+    volumes:
+      - datanode:/hadoop/dfs/data
+    env_file:
+      - ./hadoop.env
+    environment:
+      SERVICE_PRECONDITION: "namenode:50070"
+    deploy:
+      # mode global will deploy one datanode per docker swarm node
+      mode: global
+      restart_policy:
+        condition: on-failure
+      labels:
+        traefik.docker.network: workbench
+        traefik.port: 50075
+
+volumes:
+  datanode:
+  namenode:
+
+networks:
+  workbench:
+    external: true
