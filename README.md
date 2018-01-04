@@ -1,3 +1,5 @@
+[![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/big-data-europe/docker-hadoop-spark-workbench)
+
 # How to use HDFS/Spark Workbench
 
 To start an HDFS/Spark Workbench:
@@ -5,10 +7,7 @@ To start an HDFS/Spark Workbench:
     docker-compose up -d
 ```
 
-To scale up spark-workers:
-```
-    docker-compose scale spark-worker=3
-```
+docker-compose does not work to scale up spark-workers, for distributed setup see [swarm folder](./swarm) 
 
 ## Starting workbench with Hive support
 

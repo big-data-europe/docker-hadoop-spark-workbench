@@ -65,7 +65,7 @@ Deploy Spark:
 make spark
 ```
 
-## Deploying Spark Notebook and HDFS Filebrowser
+## Deploying Apache Zeppelin and HDFS Filebrowser
 
 Pull the images:
 ```
